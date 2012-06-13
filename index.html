@@ -1,0 +1,47 @@
+<html>
+<head>
+	<title>fsapi - wrapping the insanity</title>
+	<script type="text/javascript" src="src/util.js"></script>
+	<script type="text/javascript" src="src/emitter.js"></script>
+	<script type="text/javascript" src="src/promise.js"></script>
+	<script type="text/javascript" src="src/op.js"></script>
+	<script type="text/javascript" src="src/fs.js"></script>
+</head>
+<body>
+
+</head>
+<body>
+
+
+<a href="specs">specs</a>
+
+<script type="text/javascript">
+
+
+var logger = console.log.bind(console);
+var out = logger.bind(null, "OUT:");
+var err = logger.bind(null, "ERR:");
+
+try { 
+	
+var fs = FS.request(window.PERMANENT, 1024*1024*1); 
+
+function dirOut(files) {
+	return "\t"+files.map(function(a){return a.name;}).join("\n\t");
+}
+
+fs.seq(
+	FS.list, dirOut
+).then(out, err);
+
+
+
+} catch (e) {console.log(e.stack)}
+
+
+</script>
+</body>
+</html>
+
+</body>
+</html>
