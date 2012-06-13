@@ -10,7 +10,7 @@ var FS = (function(){
 			function requestFS(bytes) {
 				requestFileSystem.call(window, type, bytes, promise.resolver, promise.rejecter);
 			}
-			if (type === window.PERSISTENT) {
+			if (type === PERSISTENT) {
 				storageInfo.requestQuota(PERSISTENT, size, requestFS, promise.rejecter);
 			} else {
 				requestFS(this.size);

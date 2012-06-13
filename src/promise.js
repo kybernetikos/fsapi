@@ -92,6 +92,7 @@ var Promise = (function(){
 			
 			return pipelined;
 		},
+		// Equivalent to a chain of .thens
 		seq: function() {
 			var lastPromise = this;
 			for (var i = 0, len = arguments.length; i < len; ++i) {
@@ -102,9 +103,13 @@ var Promise = (function(){
 	});
 	// "statics"
 	mixin(Promise, {
+		// Possible states of a promise
 		UNRESOLVED: "UNRESOLVED",
 		RESOLVED: "RESOLVED",
 		REJECTED: "REJECTED",
+
+		// resolves to an array containing all the fulfillments of the passed promises
+		// or rejects if any of the passed promises reject.
 		all: function() {
 			var combined = new Promise();
 			var values = [];
@@ -124,6 +129,9 @@ var Promise = (function(){
 			}
 			return combined;
 		},
+
+		// Makes a promise that immediately resolves to the passed values
+		// unless the passed value is a single promise, in which case, it just returns it.
 		wrap: function(args) {
 			if (args.length == 1 && args[0] instanceof Promise) {
 				return args[0];
@@ -132,8 +140,8 @@ var Promise = (function(){
 			promise.resolve.apply(promise, args);
 			return promise;
 		},
+		// Does the same as the first dependency to resolve or reject
 		first: function() {
-			// Does the same as the first dependency to resolve or reject
 			var combined = new Promise();
 			var args = arguments;
 			for (var i = 0, len = args.length; i < len; ++i) {
@@ -141,8 +149,8 @@ var Promise = (function(){
 			}
 			return combined;
 		},
+		// Only rejects if all dependencies reject
 		any: function() {
-			// Only rejects if all dependencies reject
 			var combined = new Promise();
 			var args = arguments;
 			var toResolve = args.length;

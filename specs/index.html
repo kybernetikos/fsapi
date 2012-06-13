@@ -11,12 +11,15 @@
 
   <!-- include source files here... -->
 	<script type="text/javascript" src="../src/util.js"></script>
-  <script type="text/javascript" src="../src/emitter.js"></script>
-  <script type="text/javascript" src="../src/Song.js"></script>
+	<script type="text/javascript" src="../src/emitter.js"></script>
+	<script type="text/javascript" src="../src/promise.js"></script>
+	<script type="text/javascript" src="../src/op.js"></script>
+	<script type="text/javascript" src="../src/fs.js"></script>
 
   <!-- include spec files here... -->
-  <script type="text/javascript" src="SpecHelper.js"></script>
   <script type="text/javascript" src="EmitterSpec.js"></script>
+  <script type="text/javascript" src="PromiseSpec.js"></script>
+  <script type="text/javascript" src="FSSpec.js"></script>
 
   <script type="text/javascript">
     (function() {
@@ -45,6 +48,10 @@
       }
 
     })();
+    
+    beforeEach(function() {
+			if (console) console.log("Starting test:", this.description);
+    });
   </script>
 
 </head>
