@@ -1,19 +1,42 @@
 <html>
 <head>
-	<title>fsapi - wrapping the insanity</title>
+	<title>fsapi - wrapping the HTML5 Filesystem API insanity</title>
 	<script type="text/javascript" src="src/util.js"></script>
 	<script type="text/javascript" src="src/emitter.js"></script>
 	<script type="text/javascript" src="src/promise.js"></script>
 	<script type="text/javascript" src="src/op.js"></script>
 	<script type="text/javascript" src="src/fs.js"></script>
+	
+	<script type="text/javascript" src="site/lib/showdown.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="style.css" /><link>	
 </head>
 <body>
 
 </head>
 <body>
 
+<script type="text/javascript">
 
-<a href="specs">specs</a>
+	// Yes, I know, it's synchronous, but it really is meant to be part of the page load.
+	var req = new XMLHttpRequest();
+	req.open('GET', 'README.md', false);
+	try {
+		req.send();
+		if (req.status == 200) {
+			var converter = new Showdown.converter();
+		  var html = converter.makeHtml(req.responseText);
+			document.write(html);
+		} else {
+			document.write("<p>Unable to read <a href='README.md'>README.md<a>, code: "+req.status+"</p>")
+		}
+	} catch (e) {
+		document.write("<p>Unable to read <a href='README.md'>README.md<a>, error: "+e+"</p>");
+	}
+
+</script>
+
+<a href="specs">Specs</a>
 
 <script type="text/javascript">
 
@@ -37,7 +60,6 @@ fs.seq(
 
 
 } catch (e) {console.log(e.stack)}
-
 
 </script>
 </body>

@@ -1,0 +1,24 @@
+body {
+	font-family: Verdana,Geneva,'DejaVu Sans',sans-serif;
+	font-size: 1em;
+	margin-left: 2em;
+	margin-right: 10em;
+	background-color: #E6E8F2;
+	color: #40444A
+}
+
+h1 {
+	font-family: Constantina,Georgia,'Nimbus Roman No9 L',serif;
+	margin-left: -0.5em;
+	font-size: 1.5em;
+	color: #1B1D1F;
+}
+
+a:link, a:hover, a:active, a:visited { color: #1B1D1F; border-bottom: 1px dotted black; text-decoration: none;}
+a:hover { background-color: #1B1D1F; color: #CCD4E0}
+
+pre {
+	background-color: white;
+	border: 1px dotted black;
+	padding: 8px;
+}
