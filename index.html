@@ -1,6 +1,10 @@
 <html>
 <head>
 	<title>fsapi - wrapping the HTML5 Filesystem API insanity</title>
+	<script type="text/javascript" src="site/lib/shjs/sh_main.js"></script>
+	<script type="text/javascript" src="site/lib/shjs/sh_javascript_dom.min.js"></script>
+		<script type="text/javascript" src="site/lib/shjs/sh_sh.min.js"></script>
+	
 	<script type="text/javascript" src="src/util.js"></script>
 	<script type="text/javascript" src="src/emitter.js"></script>
 	<script type="text/javascript" src="src/promise.js"></script>
@@ -10,13 +14,17 @@
 	<script type="text/javascript" src="site/lib/showdown.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="style.css" /><link>	
+	<!-- <link rel="stylesheet" type="text/css" href="site/lib/shjs/sh_nedit.css"></link>  -->
+	<link rel="stylesheet" type="text/css" href="site/lib/shjs/sh_vim-dark.css"></link>
 </head>
 <body>
 
 </head>
-<body>
+<body onload="sh_highlightDocument();">
 
 <script type="text/javascript">
+
+	var languageNameConversions = {javascript: "javascript_dom"};
 
 	// Yes, I know, it's synchronous, but it really is meant to be part of the page load.
 	var req = new XMLHttpRequest();
@@ -24,19 +32,34 @@
 	try {
 		req.send();
 		if (req.status == 200) {
+			
+			var bodyText = req.responseText;
+			
+			var nextCodeId = 0;
+			var codeBlocks = [];
+			bodyText = bodyText.replace(/```([^\n]+)\n([\s\S]+?)\n```/gm, function(block, language, code) {
+					var id = nextCodeId++;
+					codeBlocks[id] = code;
+					var result = "\n    CODEBLOCK-"+(id)+"-"+(language)+"\n";
+					return result;
+			});
 			var converter = new Showdown.converter();
-		  var html = converter.makeHtml(req.responseText);
+		  var html = converter.makeHtml(bodyText);
+
+			html = html.replace(/<pre><code>CODEBLOCK-(\d+)-(\w+)\n<\/code><\/pre>/gm, function(match, blockId, language) {
+				var result = "<pre class='sh_"+(languageNameConversions[language] || language)+"'>"+codeBlocks[blockId]+"</pre>";
+				return result;
+			});
+
 			document.write(html);
 		} else {
-			document.write("<p>Unable to read <a href='README.md'>README.md<a>, code: "+req.status+"</p>")
+			document.write("<p>Unable to read <a href='README.md'>README.md<a>, code: "+req.status+"</p><p>Check out this <a href='http://kybernetikos.github.com/fsapi/'>project on GitHub</a>.</p>")
 		}
 	} catch (e) {
-		document.write("<p>Unable to read <a href='README.md'>README.md<a>, error: "+e+"</p>");
+		document.write("<p>Unable to read <a href='README.md'>README.md<a>, error: "+e+"</p><p>Check out this <a href='http://kybernetikos.github.com/fsapi/'>project on GitHub</a>.</p>");
 	}
 
 </script>
-
-<a href="specs">Specs</a>
 
 <script type="text/javascript">
 
@@ -62,6 +85,7 @@ fs.seq(
 } catch (e) {console.log(e.stack)}
 
 </script>
+
 </body>
 </html>
 
