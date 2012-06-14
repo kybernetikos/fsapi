@@ -79,9 +79,9 @@ var FS = (function(){
 		spider: function(rootdir) {
 			if (rootdir.root) rootdir = rootdir.root;
 			var result = {};
-			var listPromise = FS.list()(rootdir);
+			var listPromise = FS.list(rootdir);
 			return listPromise.then(function(entryArray) {
-				var result = {}
+				var result = {".": rootdir};
 				var dependencies = [];
 				for (var i = 0, len = entryArray.length; i < len; ++i) {
 					(function(entry) {
@@ -91,6 +91,7 @@ var FS = (function(){
 							// recurse....
 							dependencies.push(FS.spider(entry).then(function(spideredDir) {
 								result[entry.name] = spideredDir;
+								result[entry.name][".."] = rootdir;
 							}));
 						}
 					})(entryArray[i]);
