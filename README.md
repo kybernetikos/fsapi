@@ -87,5 +87,6 @@ It's still not as simple as the bash code, but the nesting has been turned into 
 
  * Get the code from the [Project Page on Github](https://github.com/kybernetikos/fsapi).
  * See this description page [on Github](http://kybernetikos.github.com/fsapi/).
+ * Read about the [Monad design pattern](http://kybernetikos.com/2012/07/10/design-pattern-wrapper-with-composable-actions/) at [my blog](http://kybernetikos.com).
  * Check the [Jasmine Specs on Github](http://kybernetikos.github.com/fsapi/specs/).
  * If you're running this locally, you can also see the [Jasmine Specs here](specs).
